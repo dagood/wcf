@@ -8,7 +8,7 @@
 
   <!-- Auto-upgraded properties for each build info dependency. -->
   <PropertyGroup>
-    <CoreFxExpectedPrerelease>beta-24512-01</CoreFxExpectedPrerelease>
+    <CoreFxExpectedPrerelease>preview1-24530-03</CoreFxExpectedPrerelease>
   </PropertyGroup>
 
   <!-- Package dependency verification/auto-upgrade configuration. -->
