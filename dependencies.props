@@ -8,7 +8,7 @@
 
   <!-- Auto-upgraded properties for each build info dependency. -->
   <PropertyGroup>
-    <CoreFxExpectedPrerelease>preview1-25220-02</CoreFxExpectedPrerelease>
+    <CoreFxExpectedPrerelease>preview1-25228-02</CoreFxExpectedPrerelease>
     <StandardExpectedPrerelease>preview1-25131-01</StandardExpectedPrerelease>
   </PropertyGroup>
 
