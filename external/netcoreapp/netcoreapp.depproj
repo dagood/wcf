@@ -14,6 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Condition="'$(TargetsWindows)'=='true'" Include="System.Security.Principal.Windows">
+      <Version>4.5.0-preview2-25319-04</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- for all configurations this project provides refs for that configuration -->
     <BinPlaceConfiguration Include="$(Configuration)">
       <RefPath>$(RefPath)</RefPath>
