@@ -31,6 +31,9 @@
     <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy">
       <Version>2.0.0-preview2-25310-02</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Private.CoreFx.NETCoreApp">
+      <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
+    </PackageReference>
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />

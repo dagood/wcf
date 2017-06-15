@@ -30,7 +30,7 @@ namespace Infrastructure.Common
             LoadSourceList();
         }
 
-        public Action<EventWrittenEventArgs> EventWritten
+        public new Action<EventWrittenEventArgs> EventWritten
         {
             get { return _eventWritten; }
             set { _eventWritten = value; }
