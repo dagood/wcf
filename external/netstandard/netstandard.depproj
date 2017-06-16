@@ -17,11 +17,12 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(NETStandardVersion)' != '' AND '$(NETStandardVersion)' &gt;= 1.3">
-    <PackageReference Condition="'$(TargetsWindows)'=='true'" Include="System.Security.Principal.Windows">
-      <Version>4.5.0-preview2-25319-04</Version>
-    </PackageReference>
-    <PackageReference Condition="'$(TargetsWindows)'=='true'" Include="System.Net.Http.WinHttpHandler">
+  <ItemGroup Condition="'$(NETStandardVersion)' != '' AND '$(NETStandardVersion)' &gt;= 1.3 AND '$(TargetsWindows)'=='true'">
+    <PackageReference Include="
+      System.Security.Principal.Windows;
+      System.Net.Http.WinHttpHandler;
+      System.Security.AccessControl;
+      ">
       <Version>4.5.0-preview2-25319-04</Version>
     </PackageReference>
   </ItemGroup>

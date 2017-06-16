@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.ReaderWriter" />
     <Reference Include="System.Xml.XmlSerializer" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetGroup)' == 'uapaot'">
+  <!--</ItemGroup>
+  <ItemGroup Condition="'$(TargetGroup)' == 'uapaot'">-->
     <Reference Include="netstandard" />
     <Reference Include="System.ComponentModel.TypeConverter" />
     <Reference Include="System.Collections.Concurrent" />

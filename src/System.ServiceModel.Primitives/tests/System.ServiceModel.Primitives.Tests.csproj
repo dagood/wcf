@@ -23,6 +23,10 @@
   <ItemGroup>
     <!--<ProjectReference Include="$(WcfInfrastructureCommonProj)" />-->
     <!--<ProjectReference Include="$(WcfUnitTestCommonProj)" />-->
+    <ReferenceFromRuntime Include="System.Private.CoreLib" />
+    <ReferenceFromRuntime Include="System.Private.Interop" />
+    <ReferenceFromRuntime Include="System.Private.Threading" />
+    <ReferenceFromRuntime Include="System.Private.DataContractSerialization" />
 
     <!-- Some internal types are needed, so we reference the implementation assembly, rather than the reference assembly. -->
     <TargetingPackExclusions Include="System.ServiceModel.Primitives" />
