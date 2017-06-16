@@ -9,4 +9,7 @@
     <IsUAP>false</IsUAP>
     <IsUAPRef>false</IsUAPRef>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetGroup)' != 'netfx'">
+    <AssemblySearchPaths>$(AssemblySearchPaths);$(NetStandardRefPath)</AssemblySearchPaths>
+  </PropertyGroup>
 </Project>

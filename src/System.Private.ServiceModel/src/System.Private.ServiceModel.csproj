@@ -49,12 +49,7 @@
     <Reference Include="System.Xml.XmlSerializer" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetGroup)' == 'uapaot'">
-    <Reference Include="System.Private.CoreLib" />
-    <Reference Include="System.Private.DataContractSerialization" />
-    <Reference Include="System.Private.Interop" />
-    <Reference Include="System.Private.Uri" />
-    <Reference Include="System.Private.Xml" />
-
+    <Reference Include="netstandard" />
     <Reference Include="System.ComponentModel.TypeConverter" />
     <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.Collections.NonGeneric" />
