@@ -4,7 +4,15 @@
   <PropertyGroup>
     <BinPlaceRef>true</BinPlaceRef>
     <NuGetDeploySourceItem>Reference</NuGetDeploySourceItem>
+
+    <!-- support cross-targeting by choosing a RID to restore when running on a different machine that what we're build for -->
+    <!--<NugetRuntimeIdentifier Condition="'$(OSGroup)' == 'Windows_NT' AND '$(RunningOnUnix)' == 'true'">win7-x64</NugetRuntimeIdentifier>
+    <NugetRuntimeIdentifier Condition="'$(OSGroup)' == 'Unix' AND '$(RunningOnUnix)' != 'true'">ubuntu.14.04-x64</NugetRuntimeIdentifier>
+    <NugetRuntimeIdentifier Condition="'$(TargetGroup)' == 'uap'">win10-$(ArchGroup)</NugetRuntimeIdentifier>
+    <NugetRuntimeIdentifier Condition="'$(TargetGroup)' == 'uapaot'">win10-$(ArchGroup)-aot</NugetRuntimeIdentifier>
+    <RidSpecificAssets>true</RidSpecificAssets>-->
     <NugetRuntimeIdentifier>None</NugetRuntimeIdentifier>
+
     <CoreFxPrivatePackageName>NETCoreApp</CoreFxPrivatePackageName>
     <CoreFxPrivatePackageName Condition="'$(TargetGroup)' == 'uap'">UAP</CoreFxPrivatePackageName>
     <CoreFxPrivatePackageName Condition="'$(TargetGroup)' == 'uapaot'">UAP</CoreFxPrivatePackageName>
@@ -32,6 +40,9 @@
     <!-- for all configurations this project provides refs for that configuration -->
     <BinPlaceConfiguration Include="$(Configuration)">
       <RefPath>$(RefPath)</RefPath>
+    </BinPlaceConfiguration>
+    <BinPlaceConfiguration Include="$(Configuration)">
+      <RuntimePath>$(RuntimePath)</RuntimePath>
     </BinPlaceConfiguration>
   </ItemGroup>
 

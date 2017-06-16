@@ -23,14 +23,32 @@
   <ItemGroup>
     <!--<ProjectReference Include="$(WcfInfrastructureCommonProj)" />-->
     <!--<ProjectReference Include="$(WcfUnitTestCommonProj)" />-->
+    <!--<ReferenceFromRuntime Include="netstandard" />-->
+    <!--<ReferenceFromRuntime Include="System.Runtime" />-->
+
+    <!--<ReferenceFromRuntime Include="System.Collections" />
+    <ReferenceFromRuntime Include="System.Collections.Concurrent" />
+    <ReferenceFromRuntime Include="System.Diagnostics.Contracts" />
+    <ReferenceFromRuntime Include="System.Diagnostics.Tracing" />
+    <ReferenceFromRuntime Include="System.Diagnostics.TraceSource" />
+    <ReferenceFromRuntime Include="System.Resources.ResourceManager" />
+    <ReferenceFromRuntime Include="System.Runtime.Serialization.Primitives" />
+    <ReferenceFromRuntime Include="System.Threading.Tasks" />
+    <ReferenceFromRuntime Include="System.Net.Primitives" />
+    <ReferenceFromRuntime Include="System.Security.Cryptography.X509Certificates" />-->
+
+    <!--<TargetingPackExclusions Include="netstandard" />
+    <TargetingPackExclusions Include="System.Collections" />
     <ReferenceFromRuntime Include="System.Private.CoreLib" />
     <ReferenceFromRuntime Include="System.Private.Interop" />
-    <ReferenceFromRuntime Include="System.Private.Threading" />
-    <ReferenceFromRuntime Include="System.Private.DataContractSerialization" />
+    <ReferenceFromRuntime Include="System.Private.Threading" />-->
+    <!--<ReferenceFromRuntime Include="System.Private.DataContractSerialization" />-->
+    <!--<ReferenceFromRuntime Include="System.Private.Uri" />-->
 
     <!-- Some internal types are needed, so we reference the implementation assembly, rather than the reference assembly. -->
     <TargetingPackExclusions Include="System.ServiceModel.Primitives" />
     <ReferenceFromRuntime Include="System.Private.ServiceModel" />
+
     <ReferenceFromRuntime Include="xunit.execution.dotnet" />
   </ItemGroup>
 

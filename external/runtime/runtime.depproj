@@ -8,6 +8,9 @@
     <NugetRuntimeIdentifier Condition="'$(TargetGroup)' == 'uap'">win10-$(ArchGroup)</NugetRuntimeIdentifier>
     <NugetRuntimeIdentifier Condition="'$(TargetGroup)' == 'uapaot'">win10-$(ArchGroup)-aot</NugetRuntimeIdentifier>
     <RidSpecificAssets>true</RidSpecificAssets>
+    <CoreFxPrivatePackageName>NETCoreApp</CoreFxPrivatePackageName>
+    <CoreFxPrivatePackageName Condition="'$(TargetGroup)' == 'uap'">UAP</CoreFxPrivatePackageName>
+    <CoreFxPrivatePackageName Condition="'$(TargetGroup)' == 'uapaot'">UAP</CoreFxPrivatePackageName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetGroup)' == 'uapaot'">
@@ -24,6 +27,10 @@
     <FileToExclude Include="System.Private.CoreLib.WinRTInterop" />
     <PackageReference Include="NETStandard.Library">
       <Version>$(NETStandardPackageVersion)</Version>
+    </PackageReference>
+
+    <PackageReference Include="TestILC.amd64ret;TestILC.armret;TestILC.x86ret">
+      <Version>$(ProjectNTfsTestILCPackageVersion)</Version>
     </PackageReference>
   </ItemGroup>
 
@@ -45,13 +52,18 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetGroup)'!='uapaot' AND '$(TargetGroup)'!='uap'">
-    <PackageReference Include="Microsoft.Private.CoreFx.NETCoreApp">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Private.CoreFx.$(CoreFxPrivatePackageName)">
       <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
     </PackageReference>
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+
+  <Target Name="RestoreRuntimeFoo"
+          AfterTargets="RestorePackages">
+    <Message Text="$(OSGroup) $(TargetGroup) $(TargetsWindows) @(PackageReference)" Importance="High" />
+  </Target>
 
   <!--<Target Name="SetupUapAotRuntimeReferences"
           AfterTargets="ResolveNuGetPackages"
@@ -113,5 +125,28 @@
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPathsNativeImages)" />
     </ItemGroup>
 
+  </Target>
+
+  <Target Name="AddTestILCRuntimes" BeforeTargets="ResolveReferences" Condition="'$(TargetGroup)' == 'uapaot'">
+    <PropertyGroup>
+      <TestILCToolsPackageName>TestILC</TestILCToolsPackageName>
+      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'x64'">$(TestILCToolsPackageName).amd64ret</TestILCToolsPackageName>
+      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'x86'">$(TestILCToolsPackageName).x86ret</TestILCToolsPackageName>
+      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'arm'">$(TestILCToolsPackageName).armret</TestILCToolsPackageName>
+    </PropertyGroup>
+
+    <Error Condition="!Exists('$(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion)\TestILC')"
+            Text="Error: looks like the $(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion) was not restored"
+    />
+
+    <ItemGroup>
+      <ReferenceCopyLocalPaths 
+        Include="$(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion)\TestILC\ExternalFiles\Framework\*.dll"
+      >
+        <Private>false</Private>
+        <NuGetPackageId>$(TestILCToolsPackageName)</NuGetPackageId>
+        <NuGetPackageVersion>$(ProjectNTfsTestILCPackageVersion)</NuGetPackageVersion>
+      </ReferenceCopyLocalPaths>
+    </ItemGroup>
   </Target>
 </Project>
