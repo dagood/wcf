@@ -15,6 +15,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ProjectGuid>{856A232C-4292-4AC7-87FE-41AE0C22C4E4}</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants Condition="'$(TargetGroup)' == 'netcoreapp'">$(DefineConstants);FEATURE_ETLEVENTS</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" />
     <Compile Include="$(WcfInfrastructureCommonDir)**\*.cs" />

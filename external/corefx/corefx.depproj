@@ -2,6 +2,9 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
   <PropertyGroup>
+    <NETStandardVersion Condition="$(NuGetTargetMoniker.StartsWith('.NETStandard,Version=v'))">$(NuGetTargetMoniker.SubString(22))</NETStandardVersion>
+    <IsNETStandard1x Condition="$(NETStandardVersion.StartsWith('1.'))">true</IsNETStandard1x>
+    <IsNETStandard2x Condition="$(NETStandardVersion.StartsWith('2.'))">true</IsNETStandard2x>
     <BinPlaceRef>true</BinPlaceRef>
     <NuGetDeploySourceItem>Reference</NuGetDeploySourceItem>
     <NugetRuntimeIdentifier>None</NugetRuntimeIdentifier>
@@ -10,20 +13,23 @@
     <CoreFxPrivatePackageName Condition="'$(TargetGroup)' == 'uapaot'">UAP</CoreFxPrivatePackageName>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(NETStandardVersion)' == ''">
     <PackageReference Include="Microsoft.Private.CoreFx.$(CoreFxPrivatePackageName)">
       <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetsWindows)'=='true'">
+  <ItemGroup>
     <PackageReference Include="System.Security.Principal.Windows">
       <Version>4.5.0-preview2-25319-04</Version>
     </PackageReference>
-    <PackageReference Include="System.Net.Http.WinHttpHandler">
+    <PackageReference Include="System.Security.AccessControl">
       <Version>4.5.0-preview2-25319-04</Version>
     </PackageReference>
-    <PackageReference Include="System.Security.AccessControl">
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetsWindows)'=='true'">
+    <PackageReference Include="System.Net.Http.WinHttpHandler">
       <Version>4.5.0-preview2-25319-04</Version>
     </PackageReference>
   </ItemGroup>

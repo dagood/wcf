@@ -8,7 +8,6 @@
   <!-- Build for all configurations -->
   <ItemGroup>
     <Project Include="netstandard/netstandard.depproj" />
-    <Project Include="netcoreapp/netcoreapp.depproj" />
     <Project Include="netfx/netfx.depproj" />
     <Project Include="corefx/corefx.depproj" />
     <Project Include="runtime/runtime.depproj" />
