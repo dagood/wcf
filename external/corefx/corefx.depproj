@@ -41,20 +41,7 @@
     <BinPlaceConfiguration Include="$(Configuration)">
       <RefPath>$(RefPath)</RefPath>
     </BinPlaceConfiguration>
-    <BinPlaceConfiguration Include="$(Configuration)">
-      <RuntimePath>$(RuntimePath)</RuntimePath>
-    </BinPlaceConfiguration>
   </ItemGroup>
-
-  <Target Name="RestoreCoreFX"
-          AfterTargets="RestorePackages">
-    <Message Text="111 $(OSGroup) $(TargetGroup) $(TargetsWindows) @(PackageReference)" Importance="High" />
-  </Target>
-
-  <Target Name="RestoreCoreFX2"
-          AfterTargets="Restore">
-    <Message Text="222 $(OSGroup) $(TargetGroup) $(TargetsWindows) @(PackageReference)" Importance="High" />
-  </Target>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>

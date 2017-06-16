@@ -28,10 +28,6 @@
     <PackageReference Include="NETStandard.Library">
       <Version>$(NETStandardPackageVersion)</Version>
     </PackageReference>
-
-    <PackageReference Include="TestILC.amd64ret;TestILC.armret;TestILC.x86ret">
-      <Version>$(ProjectNTfsTestILCPackageVersion)</Version>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetGroup)'!='uapaot'">
@@ -59,22 +55,6 @@
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
-
-  <Target Name="RestoreRuntimeFoo"
-          AfterTargets="RestorePackages">
-    <Message Text="$(OSGroup) $(TargetGroup) $(TargetsWindows) @(PackageReference)" Importance="High" />
-  </Target>
-
-  <!--<Target Name="SetupUapAotRuntimeReferences"
-          AfterTargets="ResolveNuGetPackages"
-          Condition="'$(TargetGroup)'=='uapaot'">
-
-    <Copy SourceFiles="@(ReferenceCopyLocalPaths)"
-          DestinationFolder="$(BuildConfigurationRefPath)"
-          SkipUnchangedFiles="true"
-          UseHardlinksIfPossible="true" />
-
-  </Target>-->
 
   <!-- Setup the testing shared framework host -->
   <Target Name="SetupTestingHost" AfterTargets="ResolveNuGetPackages" Condition="'$(BinPlaceTestSharedFramework)' == 'true'">
@@ -125,28 +105,5 @@
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPathsNativeImages)" />
     </ItemGroup>
 
-  </Target>
-
-  <Target Name="AddTestILCRuntimes" BeforeTargets="ResolveReferences" Condition="'$(TargetGroup)' == 'uapaot'">
-    <PropertyGroup>
-      <TestILCToolsPackageName>TestILC</TestILCToolsPackageName>
-      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'x64'">$(TestILCToolsPackageName).amd64ret</TestILCToolsPackageName>
-      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'x86'">$(TestILCToolsPackageName).x86ret</TestILCToolsPackageName>
-      <TestILCToolsPackageName Condition="'$(ArchGroup)' == 'arm'">$(TestILCToolsPackageName).armret</TestILCToolsPackageName>
-    </PropertyGroup>
-
-    <Error Condition="!Exists('$(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion)\TestILC')"
-            Text="Error: looks like the $(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion) was not restored"
-    />
-
-    <ItemGroup>
-      <ReferenceCopyLocalPaths 
-        Include="$(PackagesDir)$(TestILCToolsPackageName)\$(ProjectNTfsTestILCPackageVersion)\TestILC\ExternalFiles\Framework\*.dll"
-      >
-        <Private>false</Private>
-        <NuGetPackageId>$(TestILCToolsPackageName)</NuGetPackageId>
-        <NuGetPackageVersion>$(ProjectNTfsTestILCPackageVersion)</NuGetPackageVersion>
-      </ReferenceCopyLocalPaths>
-    </ItemGroup>
   </Target>
 </Project>

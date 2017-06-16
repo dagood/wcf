@@ -148,18 +148,12 @@
 
     <ItemGroup Condition="'$(TestILCFolder)'!=''">
       <TestILCFolderContents Include="$(TestILCFolder)\**\*" />
-      <TestILCFolderRuntimeContents Include="$(TestILCFolder)\ExternalFiles\Framework\*.dll" />
     </ItemGroup>
 
     <Copy Condition="'$(TestILCFolder)'!=''"
           SourceFiles="%(TestILCFolderContents.FullPath)"
           DestinationFiles="$(TestHostRootPath)\TestILC\%(TestILCFolderContents.RecursiveDir)%(TestILCFolderContents.Filename)%(TestILCFolderContents.Extension)"
           SkipUnchangedFiles="true" />
-    
-    <!--<Copy Condition="'$(TestILCFolder)'!=''"
-          SourceFiles="%(TestILCFolderRuntimeContents.FullPath)"
-          DestinationFiles="$(RuntimePath)\%(TestILCFolderRuntimeContents.Filename)%(TestILCFolderRuntimeContents.Extension)"
-          SkipUnchangedFiles="true" />-->
 
   </Target>
 
