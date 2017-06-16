@@ -251,6 +251,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <OptionalToolingJsonPath>$(ProjectDir)\external\test-runtime\optional.json</OptionalToolingJsonPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <!-- Don't run tests if we're building another platform's binaries on Windows -->
     <SkipTests Condition="'$(SkipTests)'=='' and ('$(OsEnvironment)'=='Windows_NT' and '$(TargetsWindows)'!='true' and '$(OSGroup)'!='AnyOS')">true</SkipTests>
   </PropertyGroup>

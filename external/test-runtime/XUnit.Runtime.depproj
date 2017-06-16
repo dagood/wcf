@@ -148,11 +148,57 @@
 
     <ItemGroup Condition="'$(TestILCFolder)'!=''">
       <TestILCFolderContents Include="$(TestILCFolder)\**\*" />
+      <!--<TestILCDllContents Include="$(TestILCFolder)\ExternalFiles\Framework\*.dll" />-->
+      <TestILCDllContents Include="
+        $(TestILCFolder)\ExternalFiles\Framework\System.Collections.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Collections.Concurrent.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Collections.Specialized.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Collections.NonGeneric.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.ComponentModel.EventBasedAsync.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.ComponentModel.TypeConverter.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.IO.Compression.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Primitives.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.ObjectModel.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Linq.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Runtime.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Runtime.Extensions.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Runtime.Serialization.Primitives.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Runtime.Serialization.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Claims.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Primitives.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Http.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Ping.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Security.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Sockets.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.WebHeaderCollection.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Net.Websockets.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Private.DataContractSerialization.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Private.Uri.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Private.Xml.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Cryptography.Algorithms.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Cryptography.Primitives.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Cryptography.X509Certificates.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Principal.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.Principal.Windows.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Security.AccessControl.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Threading.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Xml.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Xml.ReaderWriter.dll;
+        $(TestILCFolder)\ExternalFiles\Framework\System.Xml.XmlSerializer.dll;
+        " />
+      <TestILCDllContents Include="$(TestILCFolder)\ProductIlc\lib\PrivateWin32\*.dll" />
+      <DllsToCopy Include="@(TestILCDllContents)" />
+      <DllsToCopy Include="$(RefRootPath)netstandard\System.Net.Http.WinHttpHandler.dll" />
     </ItemGroup>
 
     <Copy Condition="'$(TestILCFolder)'!=''"
           SourceFiles="%(TestILCFolderContents.FullPath)"
           DestinationFiles="$(TestHostRootPath)\TestILC\%(TestILCFolderContents.RecursiveDir)%(TestILCFolderContents.Filename)%(TestILCFolderContents.Extension)"
+          SkipUnchangedFiles="true" />
+
+    <Copy Condition="'$(TestILCFolder)'!=''"
+          SourceFiles="%(DllsToCopy.FullPath)"
+          DestinationFiles="$(BuildConfigurationRefPath)\%(DllsToCopy.Filename)%(DllsToCopy.Extension)"
           SkipUnchangedFiles="true" />
 
   </Target>

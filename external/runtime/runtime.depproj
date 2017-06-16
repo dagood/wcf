@@ -9,11 +9,23 @@
     <NugetRuntimeIdentifier Condition="'$(TargetGroup)' == 'uapaot'">win10-$(ArchGroup)-aot</NugetRuntimeIdentifier>
     <RidSpecificAssets>true</RidSpecificAssets>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetGroup)' == 'uapaot'">
     <!-- System.Private.* can't be on the ILCInputFolder since ilc.exe needs to use the matching one from its toolchain. -->
     <BinPlaceILCInputFolder>false</BinPlaceILCInputFolder>
     <NuGetDeploySourceItem>Reference</NuGetDeploySourceItem>
   </PropertyGroup>
+  <ItemGroup Condition="'$(TargetGroup)'=='uapaot'">
+    <PackageReference Include="Microsoft.TargetingPack.Private.NETNative">
+      <Version>1.1.0-$(ProjectNTfsExpectedPrerelease)</Version>
+    </PackageReference>
+    <FileToExclude Include="System.Private.CoreLib.Augments" />
+    <FileToExclude Include="System.Private.CoreLib.DynamicDelegate" />
+    <FileToExclude Include="System.Private.CoreLib.WinRTInterop" />
+    <PackageReference Include="NETStandard.Library">
+      <Version>$(NETStandardPackageVersion)</Version>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetGroup)'!='uapaot'">
     <PackageReference Include="Microsoft.NETCore.Platforms">
@@ -31,12 +43,26 @@
     <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy">
       <Version>2.0.0-preview2-25310-02</Version>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetGroup)'!='uapaot' AND '$(TargetGroup)'!='uap'">
     <PackageReference Include="Microsoft.Private.CoreFx.NETCoreApp">
       <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
     </PackageReference>
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+
+  <!--<Target Name="SetupUapAotRuntimeReferences"
+          AfterTargets="ResolveNuGetPackages"
+          Condition="'$(TargetGroup)'=='uapaot'">
+
+    <Copy SourceFiles="@(ReferenceCopyLocalPaths)"
+          DestinationFolder="$(BuildConfigurationRefPath)"
+          SkipUnchangedFiles="true"
+          UseHardlinksIfPossible="true" />
+
+  </Target>-->
 
   <!-- Setup the testing shared framework host -->
   <Target Name="SetupTestingHost" AfterTargets="ResolveNuGetPackages" Condition="'$(BinPlaceTestSharedFramework)' == 'true'">
