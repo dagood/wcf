@@ -1,0 +1,22 @@
+{
+  "Packages": {
+    "System.Private.ServiceModel": {
+      "BaselineVersion": "4.3.0"
+    },
+    "System.ServiceModel.Duplex": {
+      "BaselineVersion": "4.3.0"
+    },
+    "System.ServiceModel.Http": {
+      "BaselineVersion": "4.3.0"
+    },
+    "System.ServiceModel.NetTcp": {
+      "BaselineVersion": "4.3.0"
+    },
+    "System.ServiceModel.Primitives": {
+      "BaselineVersion": "4.3.0"
+    },
+    "System.ServiceModel.Security": {
+      "BaselineVersion": "4.3.0"
+    }
+  }
+}
