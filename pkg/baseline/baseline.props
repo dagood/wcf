@@ -1,14 +1,22 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\Microsoft.Private.PackageBaseline\Microsoft.Private.PackageBaseline.props" />
-  
   <PropertyGroup>
-    <!-- Set PackageIndexFile to point to our local repo's index.  This tells the packaging targets
-         which index should be used for updates -->
-    <PackageIndexFile>$(MSBuildThisFileDirectory)..\Microsoft.Private.PackageBaseline\packageIndex.json</PackageIndexFile>
+    <!-- Use baseline from package restored in external/harvestPackages. -->
+    <CoreFxBaseLinePackageName>Microsoft.Private.PackageBaseline</CoreFxBaseLinePackageName>
+    <!-- NuGet doesn't currently write out the versionless props/targets for this, so manually pull it in from packages folder -->
+    <CoreFxBaseLinePackageProps Condition="'$(CoreFxBaseLinePackageProps)' == ''">$(PackagesDir)$(CoreFxBaseLinePackageName)/$(CoreFxBaseLinePackageVersion)/build/$(CoreFxBaseLinePackageName).props</CoreFxBaseLinePackageProps>
+
+    <PackageIndexFile>$(MSBuildThisFileDirectory)\packageIndex.json</PackageIndexFile>
   </PropertyGroup>
 
-  <Target Name="BlockStable" Condition="'$(BlockStable)' == 'true'" AfterTargets="CalculatePackageVersion">
-    <!-- DO NOT ship this packages as stable in .NET Core 2.0. -->
-    <Error Condition="!$(PackageVersion.Contains('-'))" Text="Package $(Id) should not be built stable" />
+  <ItemGroup>
+    <PackageIndex Include="$(PackageIndexFile)" />
+  </ItemGroup>
+
+  <!-- bring in common baseline -->
+  <Import Condition="Exists('$(CoreFxBaseLinePackageProps)')" Project="$(CoreFxBaseLinePackageProps)" />
+  
+  <Target Name="EnsureCoreFxBaseLine" Condition="'$(MSBuildProjectExtension)' == '.pkgproj'" BeforeTargets="Build">
+    <Error Condition="!Exists('$(CoreFxBaseLinePackageProps)')" 
+           Text="Error '$(CoreFxBaseLinePackageProps)' does not exist, ensure you have restored packages before building this project" />
   </Target>
 </Project>
