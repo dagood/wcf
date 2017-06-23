@@ -27,7 +27,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetGroup)' != 'uap'">
+  <ItemGroup Condition="'$(TargetsWindows)'=='true'">
     <PackageReference Include="System.Net.Http.WinHttpHandler">
       <Version>4.4.0-preview2-25316-01</Version>
     </PackageReference>
