@@ -10,11 +10,19 @@
     <RidSpecificAssets>true</RidSpecificAssets>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="@(RefAndRuntimePackageReference)" />
+  <ItemGroup Condition="'$(TargetGroup)' != 'uapaot'">
+    <PackageReference Include="System.Security.AccessControl">
+      <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetGroup)' == 'netcoreapp'">
+    <PackageReference Include="Microsoft.Private.CoreFx.NETCoreApp">
+      <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reflection.DispatchProxy">
+      <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
+    </PackageReference>
     <PackageReference Include="System.Security.Principal.Windows">
       <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
     </PackageReference>
@@ -24,6 +32,24 @@
       <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetGroup)' == 'uap' or
+                        '$(TargetGroup)' == 'uapaot'">
+    <PackageReference Include="Microsoft.Private.CoreFx.UAP">
+      <Version>$(MicrosoftPrivateCoreFxNETCoreAppPackageVersion)</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <!--
+    This depproj will deploy runtime assets, but also deploy reference assets
+    with this target.
+  -->
+  <Target Name="CopyRefAssets" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <_ReferenceAssets Include="@(Reference)" Condition="'%(Reference.NuGetPackageId)' != ''" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ReferenceAssets)" DestinationFolder="$(RefPath)" />
+  </Target>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>

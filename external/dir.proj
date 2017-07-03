@@ -7,8 +7,7 @@
 
   <!-- Build for all configurations -->
   <ItemGroup>
-    <Project Include="corefx/runtime/corefx.runtime.depproj" />
-    <Project Include="corefx/ref/corefx.ref.depproj" />
+    <Project Include="corefx/corefx.depproj" />
     <Project Include="netstandard/netstandard.depproj" />
     <Project Include="netfx/netfx.depproj" />
     <Project Include="runtime/runtime.depproj" />
