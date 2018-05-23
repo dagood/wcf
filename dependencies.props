@@ -15,6 +15,7 @@
     <BuildToolsCurrentRef>ed8ea9cfbe31692bdacc2d110508367da56bbba2</BuildToolsCurrentRef>
     <CoreClrCurrentRef>23689adf4032d0278baeaa8d61140d26ab256491</CoreClrCurrentRef>
     <CoreSetupCurrentRef>23689adf4032d0278baeaa8d61140d26ab256491</CoreSetupCurrentRef>
+    <ProdConCurrentRef>b0f08270da85e75c1fc9ac0b8b56937a4708958e</ProdConCurrentRef>
   </PropertyGroup>
 
   <!-- Auto-upgraded properties for each build info dependency. -->
@@ -94,6 +95,21 @@
       <RawVersionsBaseUrl>https://raw.githubusercontent.com/dotnet/versions</RawVersionsBaseUrl>
     </DependencyBuildInfo>
 
+    <DependencyInfo Include="ProdCon">
+      <DependencyType>Orchestrated build</DependencyType>
+      <BasePath>build-info/dotnet/product/cli/release/2.1</BasePath>
+      <CurrentRef>$(ProdConCurrentRef)</CurrentRef>
+      <VersionsRepoOwner>dotnet</VersionsRepoOwner>
+      <VersionsRepo>versions</VersionsRepo>
+    </DependencyInfo>
+
+    <UpdateStep Include="ProdCon">
+      <UpdaterType>Orchestrated blob feed package version</UpdaterType>
+      <Path>$(MSBuildThisFileFullPath)</Path>
+      <ElementName>MicrosoftPrivateCoreFxNETCoreAppPackageVersion</ElementName>
+      <PackageId>Microsoft.Private.CoreFx.NETCoreApp</PackageId>
+    </UpdateStep>
+
     <XmlUpdateStep Include="WCF">
       <Path>$(MSBuildThisFileFullPath)</Path>
       <ElementName>WCFExpectedPrerelease</ElementName>
@@ -103,11 +119,6 @@
       <Path>$(MSBuildThisFileFullPath)</Path>
       <ElementName>CoreFxExpectedPrerelease</ElementName>
       <BuildInfoName>CoreFx</BuildInfoName>
-    </XmlUpdateStep>
-    <XmlUpdateStep Include="CoreFx">
-      <Path>$(MSBuildThisFileFullPath)</Path>
-      <ElementName>MicrosoftPrivateCoreFxNETCoreAppPackageVersion</ElementName>
-      <PackageId>Microsoft.Private.CoreFx.NETCoreApp</PackageId>
     </XmlUpdateStep>
     <XmlUpdateStep Include="CoreFx">
       <Path>$(MSBuildThisFileFullPath)</Path>
